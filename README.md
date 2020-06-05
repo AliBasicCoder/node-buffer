@@ -5,7 +5,7 @@ a nodejs buffer polyfill for deno using the [buffer](https://github.com/feross/b
 ## Usage
 
 ```ts
-import { Buffer } from "http://deno.land/x/node_buffer";
+import { Buffer } from "http://deno.land/x/node_buffer/index.ts";
 
 console.log(
   Buffer.from([104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]).toString()
