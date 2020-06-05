@@ -1,4 +1,8 @@
-import { Buffer as _Buffer, SlowBuffer as _SlowBuffer } from "./src/buffer.js";
+import {
+  Buffer as _Buffer,
+  kMaxLength,
+  SlowBuffer as _SlowBuffer,
+} from "./src/buffer.js";
 
 type TypedArray =
   | Int8Array
@@ -15,6 +19,10 @@ type BufferConstructor = (length: number) => BufferType;
 
 interface BufferClass extends BufferConstructor {
   poolSize: number;
+  constants: {
+    MAX_LENGTH: number;
+    MAX_STRING_LENGTH: number;
+  };
   from(string: string, encoding?: string): BufferType;
   from(
     arrayBuffer: ArrayBuffer,
@@ -123,5 +131,10 @@ interface BufferType extends Uint8Array {
 // @ts-ignore
 export const Buffer: BufferClass = _Buffer;
 
+Buffer.constants = {
+  MAX_LENGTH: kMaxLength,
+  MAX_STRING_LENGTH: 1900000000,
+};
+
 // @ts-ignore
-export const SlowBuffer = _SlowBuffer;
+export const SlowBuffer: (size: number) => Buffer = _SlowBuffer;
