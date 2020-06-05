@@ -120,6 +120,8 @@ interface BufferType extends Uint8Array {
   writeFloatLE(value: number, offset?: number): number;
 }
 
+console.log(import.meta);
+
 const require = createRequire(import.meta.url);
 
 export const Buffer: BufferClass = require("buffer").Buffer;
