@@ -1,4 +1,4 @@
-import { createRequire } from "https://deno.land/std/node/module.ts";
+import { Buffer as _Buffer, SlowBuffer as _SlowBuffer } from "./src/buffer.js";
 
 type TypedArray =
   | Int8Array
@@ -120,8 +120,8 @@ interface BufferType extends Uint8Array {
   writeFloatLE(value: number, offset?: number): number;
 }
 
-console.log(import.meta);
+// @ts-ignore
+export const Buffer: BufferClass = _Buffer;
 
-const require = createRequire(import.meta.url);
-
-export const Buffer: BufferClass = require("buffer").Buffer;
+// @ts-ignore
+export const SlowBuffer = _SlowBuffer;
