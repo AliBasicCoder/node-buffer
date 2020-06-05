@@ -1,3 +1,4 @@
+// @ts-nocheck
 export function read(buffer, offset, isLE, mLen, nBytes) {
   var e, m;
   var eLen = nBytes * 8 - mLen - 1;
