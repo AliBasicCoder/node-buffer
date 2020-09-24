@@ -79,7 +79,8 @@ export function write(buffer, value, offset, isLE, mLen, nBytes) {
     ;
     mLen >= 8;
     buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8
-  ) {}
+  ) {
+  }
 
   e = (e << mLen) | m;
   eLen += mLen;
@@ -87,7 +88,8 @@ export function write(buffer, value, offset, isLE, mLen, nBytes) {
     ;
     eLen > 0;
     buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8
-  ) {}
+  ) {
+  }
 
   buffer[offset + i - d] |= s * 128;
 }

@@ -27,7 +27,7 @@ interface BufferClass extends BufferConstructor {
   from(
     arrayBuffer: ArrayBuffer,
     byteOffset?: number,
-    length?: number
+    length?: number,
   ): BufferType;
   from(array: number[]): BufferType;
   from(buffer: BufferType): BufferType;
@@ -44,7 +44,7 @@ interface BufferClass extends BufferConstructor {
       | DataView
       | ArrayBuffer
       | SharedArrayBuffer,
-    encoding?: string
+    encoding?: string,
   ): number;
   compare(buf1: BufferType, buf2: BufferType): -1 | 0 | 1;
   concat(buffers: BufferType[] | Uint8Array[], totalLen: number): BufferType;
@@ -58,19 +58,19 @@ interface BufferType extends Uint8Array {
   fill(
     value: number | Uint8Array | BufferType,
     offset?: number,
-    end?: number
+    end?: number,
   ): this;
   includes(thing: string, encoding?: string): boolean;
   includes(
     thing: BufferType | Uint8Array | number,
-    byteOffset?: number
+    byteOffset?: number,
   ): boolean;
   indexOf(thing: string, encoding?: string): number;
   indexOf(thing: BufferType | Uint8Array | number, byteOffset?: number): number;
   lastIndexOf(thing: string, encoding?: string): number;
   lastIndexOf(
     thing: BufferType | Uint8Array | number,
-    byteOffset?: number
+    byteOffset?: number,
   ): number;
   toJSON(): {
     type: "Buffer";

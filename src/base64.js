@@ -58,8 +58,7 @@ export function toByteArray(b64) {
 
   var i;
   for (i = 0; i < len; i += 4) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 18) |
+    tmp = (revLookup[b64.charCodeAt(i)] << 18) |
       (revLookup[b64.charCodeAt(i + 1)] << 12) |
       (revLookup[b64.charCodeAt(i + 2)] << 6) |
       revLookup[b64.charCodeAt(i + 3)];
@@ -69,15 +68,13 @@ export function toByteArray(b64) {
   }
 
   if (placeHoldersLen === 2) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 2) |
+    tmp = (revLookup[b64.charCodeAt(i)] << 2) |
       (revLookup[b64.charCodeAt(i + 1)] >> 4);
     arr[curByte++] = tmp & 0xff;
   }
 
   if (placeHoldersLen === 1) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 10) |
+    tmp = (revLookup[b64.charCodeAt(i)] << 10) |
       (revLookup[b64.charCodeAt(i + 1)] << 4) |
       (revLookup[b64.charCodeAt(i + 2)] >> 2);
     arr[curByte++] = (tmp >> 8) & 0xff;
@@ -100,8 +97,7 @@ function encodeChunk(uint8, start, end) {
   var tmp;
   var output = [];
   for (var i = start; i < end; i += 3) {
-    tmp =
-      ((uint8[i] << 16) & 0xff0000) +
+    tmp = ((uint8[i] << 16) & 0xff0000) +
       ((uint8[i + 1] << 8) & 0xff00) +
       (uint8[i + 2] & 0xff);
     output.push(tripletToBase64(tmp));
@@ -122,8 +118,8 @@ export function fromByteArray(uint8) {
       encodeChunk(
         uint8,
         i,
-        i + maxChunkLength > len2 ? len2 : i + maxChunkLength
-      )
+        i + maxChunkLength > len2 ? len2 : i + maxChunkLength,
+      ),
     );
   }
 
@@ -137,7 +133,7 @@ export function fromByteArray(uint8) {
       lookup[tmp >> 10] +
         lookup[(tmp >> 4) & 0x3f] +
         lookup[(tmp << 2) & 0x3f] +
-        "="
+        "=",
     );
   }
 

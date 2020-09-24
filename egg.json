@@ -1,0 +1,16 @@
+{
+  "name": "node_buffer",
+  "description": "node.js buffer in deno",
+  "stable": true,
+  "files": [
+    "./src/**/*",
+    "./index.ts",
+    "./mod.ts",
+    "mod.ts"
+  ],
+  "version": "1.0.0",
+  "entry": "/mod.ts",
+  "repository": "https://github.com/AliBasicCoder/node-buffer",
+  "checkAll": true,
+  "unlisted": false
+}

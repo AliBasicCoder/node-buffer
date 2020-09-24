@@ -44,7 +44,7 @@ if (
 ) {
   console.error(
     "This browser lacks typed array (Uint8Array) support which is required by " +
-      "`buffer` v5.x. Use `buffer` v4.x if you require old browser support."
+      "`buffer` v5.x. Use `buffer` v4.x if you require old browser support.",
   );
 }
 
@@ -84,7 +84,7 @@ Object.defineProperty(Buffer.prototype, "offset", {
 function createBuffer(length) {
   if (length > K_MAX_LENGTH) {
     throw new RangeError(
-      'The value "' + length + '" is invalid for option "size"'
+      'The value "' + length + '" is invalid for option "size"',
     );
   }
   // Return an augmented `Uint8Array` instance
@@ -108,7 +108,7 @@ export function Buffer(arg, encodingOrOffset, length) {
   if (typeof arg === "number") {
     if (typeof encodingOrOffset === "string") {
       throw new TypeError(
-        'The "string" argument must be of type string. Received type number'
+        'The "string" argument must be of type string. Received type number',
       );
     }
     return allocUnsafe(arg);
@@ -131,7 +131,7 @@ function from(value, encodingOrOffset, length) {
     throw new TypeError(
       "The first argument must be one of type string, Buffer, ArrayBuffer, Array, " +
         "or Array-like Object. Received type " +
-        typeof value
+        typeof value,
     );
   }
 
@@ -152,7 +152,7 @@ function from(value, encodingOrOffset, length) {
 
   if (typeof value === "number") {
     throw new TypeError(
-      'The "value" argument must not be of type number. Received type number'
+      'The "value" argument must not be of type number. Received type number',
     );
   }
 
@@ -172,14 +172,14 @@ function from(value, encodingOrOffset, length) {
     return Buffer.from(
       value[Symbol.toPrimitive]("string"),
       encodingOrOffset,
-      length
+      length,
     );
   }
 
   throw new TypeError(
     "The first argument must be one of type string, Buffer, ArrayBuffer, Array, " +
       "or Array-like Object. Received type " +
-      typeof value
+      typeof value,
   );
 }
 
@@ -205,7 +205,7 @@ function assertSize(size) {
     throw new TypeError('"size" argument must be of type number');
   } else if (size < 0) {
     throw new RangeError(
-      'The value "' + size + '" is invalid for option "size"'
+      'The value "' + size + '" is invalid for option "size"',
     );
   }
 }
@@ -342,7 +342,7 @@ function checked(length) {
       "Attempt to allocate Buffer larger than maximum " +
         "size: 0x" +
         K_MAX_LENGTH.toString(16) +
-        " bytes"
+        " bytes",
     );
   }
   return length | 0;
@@ -365,7 +365,7 @@ Buffer.compare = function compare(a, b) {
   if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength);
   if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
     throw new TypeError(
-      'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
+      'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array',
     );
   }
 
@@ -450,7 +450,7 @@ function byteLength(string, encoding) {
     throw new TypeError(
       'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
         "Received type " +
-        typeof string
+        typeof string,
     );
   }
 
@@ -643,7 +643,7 @@ Buffer.prototype.compare = function compare(
   start,
   end,
   thisStart,
-  thisEnd
+  thisEnd,
 ) {
   if (isInstance(target, Uint8Array)) {
     target = Buffer.from(target, target.offset, target.byteLength);
@@ -652,7 +652,7 @@ Buffer.prototype.compare = function compare(
     throw new TypeError(
       'The "target" argument must be one of type Buffer or Uint8Array. ' +
         "Received type " +
-        typeof target
+        typeof target,
     );
   }
 
@@ -882,7 +882,7 @@ function utf8Write(buf, string, offset, length) {
     utf8ToBytes(string, buf.length - offset),
     buf,
     offset,
-    length
+    length,
   );
 }
 
@@ -903,7 +903,7 @@ function ucs2Write(buf, string, offset, length) {
     utf16leToBytes(string, buf.length - offset),
     buf,
     offset,
-    length
+    length,
   );
 }
 
@@ -930,7 +930,7 @@ Buffer.prototype.write = function write(string, offset, length, encoding) {
     }
   } else {
     throw new Error(
-      "Buffer.write(string, encoding, offset[, length]) is no longer supported"
+      "Buffer.write(string, encoding, offset[, length]) is no longer supported",
     );
   }
 
@@ -1004,8 +1004,13 @@ function utf8Slice(buf, start, end) {
   while (i < end) {
     var firstByte = buf[i];
     var codePoint = null;
-    var bytesPerSequence =
-      firstByte > 0xef ? 4 : firstByte > 0xdf ? 3 : firstByte > 0xbf ? 2 : 1;
+    var bytesPerSequence = firstByte > 0xef
+      ? 4
+      : firstByte > 0xdf
+      ? 3
+      : firstByte > 0xbf
+      ? 2
+      : 1;
 
     if (i + bytesPerSequence <= end) {
       var secondByte, thirdByte, fourthByte, tempCodePoint;
@@ -1029,8 +1034,7 @@ function utf8Slice(buf, start, end) {
           secondByte = buf[i + 1];
           thirdByte = buf[i + 2];
           if ((secondByte & 0xc0) === 0x80 && (thirdByte & 0xc0) === 0x80) {
-            tempCodePoint =
-              ((firstByte & 0xf) << 0xc) |
+            tempCodePoint = ((firstByte & 0xf) << 0xc) |
               ((secondByte & 0x3f) << 0x6) |
               (thirdByte & 0x3f);
             if (
@@ -1050,8 +1054,7 @@ function utf8Slice(buf, start, end) {
             (thirdByte & 0xc0) === 0x80 &&
             (fourthByte & 0xc0) === 0x80
           ) {
-            tempCodePoint =
-              ((firstByte & 0xf) << 0x12) |
+            tempCodePoint = ((firstByte & 0xf) << 0x12) |
               ((secondByte & 0x3f) << 0xc) |
               ((thirdByte & 0x3f) << 0x6) |
               (fourthByte & 0x3f);
@@ -1098,7 +1101,7 @@ function decodeCodePointsArray(codePoints) {
   while (i < len) {
     res += String.fromCharCode.apply(
       String,
-      codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH))
+      codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH)),
     );
   }
   return res;
@@ -1178,16 +1181,18 @@ Buffer.prototype.slice = function slice(start, end) {
  * Need to make sure that buffer isn't trying to write out of bounds.
  */
 function checkOffset(offset, ext, length) {
-  if (offset % 1 !== 0 || offset < 0)
+  if (offset % 1 !== 0 || offset < 0) {
     throw new RangeError("offset is not uint");
-  if (offset + ext > length)
+  }
+  if (offset + ext > length) {
     throw new RangeError("Trying to access beyond buffer length");
+  }
 }
 
 Buffer.prototype.readUIntLE = function readUIntLE(
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   offset = offset >>> 0;
   byteLength = byteLength >>> 0;
@@ -1206,7 +1211,7 @@ Buffer.prototype.readUIntLE = function readUIntLE(
 Buffer.prototype.readUIntBE = function readUIntBE(
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   offset = offset >>> 0;
   byteLength = byteLength >>> 0;
@@ -1367,10 +1372,12 @@ Buffer.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
 };
 
 function checkInt(buf, value, offset, ext, max, min) {
-  if (!Buffer.isBuffer(buf))
+  if (!Buffer.isBuffer(buf)) {
     throw new TypeError('"buffer" argument must be a Buffer instance');
-  if (value > max || value < min)
+  }
+  if (value > max || value < min) {
     throw new RangeError('"value" argument is out of bounds');
+  }
   if (offset + ext > buf.length) throw new RangeError("Index out of range");
 }
 
@@ -1378,7 +1385,7 @@ Buffer.prototype.writeUIntLE = function writeUIntLE(
   value,
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1402,7 +1409,7 @@ Buffer.prototype.writeUIntBE = function writeUIntBE(
   value,
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1433,7 +1440,7 @@ Buffer.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
 Buffer.prototype.writeUInt16LE = function writeUInt16LE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1446,7 +1453,7 @@ Buffer.prototype.writeUInt16LE = function writeUInt16LE(
 Buffer.prototype.writeUInt16BE = function writeUInt16BE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1459,7 +1466,7 @@ Buffer.prototype.writeUInt16BE = function writeUInt16BE(
 Buffer.prototype.writeUInt32LE = function writeUInt32LE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1474,7 +1481,7 @@ Buffer.prototype.writeUInt32LE = function writeUInt32LE(
 Buffer.prototype.writeUInt32BE = function writeUInt32BE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1490,7 +1497,7 @@ Buffer.prototype.writeIntLE = function writeIntLE(
   value,
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1518,7 +1525,7 @@ Buffer.prototype.writeIntBE = function writeIntBE(
   value,
   offset,
   byteLength,
-  noAssert
+  noAssert,
 ) {
   value = +value;
   offset = offset >>> 0;
@@ -1607,7 +1614,7 @@ function writeFloat(buf, value, offset, littleEndian, noAssert) {
       offset,
       4,
       3.4028234663852886e38,
-      -3.4028234663852886e38
+      -3.4028234663852886e38,
     );
   }
   ieee754.write(buf, value, offset, littleEndian, 23, 4);
@@ -1632,7 +1639,7 @@ function writeDouble(buf, value, offset, littleEndian, noAssert) {
       offset,
       8,
       1.7976931348623157e308,
-      -1.7976931348623157e308
+      -1.7976931348623157e308,
     );
   }
   ieee754.write(buf, value, offset, littleEndian, 52, 8);
@@ -1642,7 +1649,7 @@ function writeDouble(buf, value, offset, littleEndian, noAssert) {
 Buffer.prototype.writeDoubleLE = function writeDoubleLE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   return writeDouble(this, value, offset, true, noAssert);
 };
@@ -1650,15 +1657,16 @@ Buffer.prototype.writeDoubleLE = function writeDoubleLE(
 Buffer.prototype.writeDoubleBE = function writeDoubleBE(
   value,
   offset,
-  noAssert
+  noAssert,
 ) {
   return writeDouble(this, value, offset, false, noAssert);
 };
 
 // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 Buffer.prototype.copy = function copy(target, targetStart, start, end) {
-  if (!Buffer.isBuffer(target))
+  if (!Buffer.isBuffer(target)) {
     throw new TypeError("argument should be a Buffer");
+  }
   if (!start) start = 0;
   if (!end && end !== 0) end = this.length;
   if (targetStart >= target.length) targetStart = target.length;
@@ -1673,8 +1681,9 @@ Buffer.prototype.copy = function copy(target, targetStart, start, end) {
   if (targetStart < 0) {
     throw new RangeError("targetStart out of bounds");
   }
-  if (start < 0 || start >= this.length)
+  if (start < 0 || start >= this.length) {
     throw new RangeError("Index out of range");
+  }
   if (end < 0) throw new RangeError("sourceEnd out of bounds");
 
   // Are we oob?
@@ -1700,7 +1709,7 @@ Buffer.prototype.copy = function copy(target, targetStart, start, end) {
     Uint8Array.prototype.set.call(
       target,
       this.subarray(start, end),
-      targetStart
+      targetStart,
     );
   }
 
@@ -1765,7 +1774,7 @@ Buffer.prototype.fill = function fill(val, start, end, encoding) {
     var len = bytes.length;
     if (len === 0) {
       throw new TypeError(
-        'The value "' + val + '" is invalid for argument "value"'
+        'The value "' + val + '" is invalid for argument "value"',
       );
     }
     for (i = 0; i < end - start; ++i) {
@@ -1834,8 +1843,8 @@ function utf8ToBytes(string, units) {
       }
 
       // valid surrogate pair
-      codePoint =
-        (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) + 0x10000;
+      codePoint = (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) +
+        0x10000;
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
       if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
@@ -1855,7 +1864,7 @@ function utf8ToBytes(string, units) {
       bytes.push(
         (codePoint >> 0xc) | 0xe0,
         ((codePoint >> 0x6) & 0x3f) | 0x80,
-        (codePoint & 0x3f) | 0x80
+        (codePoint & 0x3f) | 0x80,
       );
     } else if (codePoint < 0x110000) {
       if ((units -= 4) < 0) break;
@@ -1863,7 +1872,7 @@ function utf8ToBytes(string, units) {
         (codePoint >> 0x12) | 0xf0,
         ((codePoint >> 0xc) & 0x3f) | 0x80,
         ((codePoint >> 0x6) & 0x3f) | 0x80,
-        (codePoint & 0x3f) | 0x80
+        (codePoint & 0x3f) | 0x80,
       );
     } else {
       throw new Error("Invalid code point");
