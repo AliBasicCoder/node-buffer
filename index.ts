@@ -27,7 +27,7 @@ interface BufferClass extends BufferConstructor {
   from(
     arrayBuffer: ArrayBuffer,
     byteOffset?: number,
-    length?: number,
+    length?: number
   ): BufferType;
   from(array: number[]): BufferType;
   from(buffer: BufferType): BufferType;
@@ -44,41 +44,47 @@ interface BufferClass extends BufferConstructor {
       | DataView
       | ArrayBuffer
       | SharedArrayBuffer,
-    encoding?: string,
+    encoding?: string
   ): number;
   compare(buf1: BufferType, buf2: BufferType): -1 | 0 | 1;
   concat(buffers: BufferType[] | Uint8Array[], totalLen: number): BufferType;
   isEncoding(): boolean;
 }
 
+type valueType = string | BufferType | Uint8Array | number;
+
 interface BufferType extends Uint8Array {
   buffer: ArrayBuffer;
   equals(otherBuffer: BufferType): boolean;
-  fill(value: string, encoding: string): this;
-  fill(
-    value: number | Uint8Array | BufferType,
-    offset?: number,
-    end?: number,
-  ): this;
-  includes(thing: string, encoding?: string): boolean;
-  includes(
-    thing: BufferType | Uint8Array | number,
-    byteOffset?: number,
-  ): boolean;
-  indexOf(thing: string, encoding?: string): number;
-  indexOf(thing: BufferType | Uint8Array | number, byteOffset?: number): number;
-  lastIndexOf(thing: string, encoding?: string): number;
-  lastIndexOf(
-    thing: BufferType | Uint8Array | number,
-    byteOffset?: number,
-  ): number;
+
+  fill(value: valueType, encoding?: string): this;
+  fill(value: valueType, offset: number, encoding?: string): this;
+  fill(value: valueType, offset: number, end: number, encoding?: string): this;
+
+  includes(value: valueType, encoding?: string): boolean;
+  includes(value: valueType, byteOffset?: number): boolean;
+  includes(value: valueType, byteOffset?: number, encoding?: string): boolean;
+
+  indexOf(value: valueType, encoding?: string): number;
+  indexOf(value: valueType, byteOffset?: number): number;
+  indexOf(value: valueType, byteOffset?: number, encoding?: string): number;
+
+  lastIndexOf(value: valueType, encoding?: string): number;
+  lastIndexOf(value: valueType, byteOffset?: number): number;
+  lastIndexOf(value: valueType, byteOffset?: number, encoding?: string): number;
+
   toJSON(): {
     type: "Buffer";
     data: number[];
   };
+
   toString(encoding?: string, start?: number, end?: number): string;
+
   write(string: string, encoding?: string): number;
   write(string: string, offset?: number, length?: number): number;
+  write(string: string, offset?: number, encoding?: string): number;
+  write(string: string, offset?: number, length?: number, encoding?: string): number;
+
   swap16(): this;
   swap32(): this;
   swap64(): this;
